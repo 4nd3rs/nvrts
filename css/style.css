@@ -202,6 +202,14 @@ ul.pxs_slider li div.day{
 	background-color: #14B06F;
 }
 
+ul.pxs_slider li div.evening{
+	background-color: #FF4C4D;
+}
+
+ul.pxs_slider li div.night{
+	background-color: #02B5DE;
+}
+
 
 ul.pxs_thumbnails{
 	height:35px;

@@ -288,13 +288,16 @@
 					//change bg image
 					if(current === 1) {
 						$pxs_bg1.attr("class","pxs_bg1 day");
-						$elems[current].attr("class","item day");
+						$elems[current].setAttribute("class","item day");
 					} else if(current === 2) {
 						$pxs_bg1.attr("class","pxs_bg1 evening");
+						$elems[current].setAttribute("class","item evening");
 					} else if(current === 3) {
 						$pxs_bg1.attr("class","pxs_bg1 night");
+						$elems[current].setAttribute("class","item night");
 					} else {
 						$pxs_bg1.attr("class","pxs_bg1");
+						$elems[current].setAttribute("class","item");
 					}	
 				}
 				
