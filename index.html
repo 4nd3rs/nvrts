@@ -19,9 +19,10 @@
     </head>
     <body>
 		
-		<img src="images/24timmar.png"/>		
+		<img class="full-width" src="images/24timmar.png"/>		
 
 		<div id="pxs_container" class="pxs_container">
+			<div class="sun"></div>
 			<div class="pxs_bg">
 				<div class="pxs_bg1"></div>
 				<div class="pxs_bg2"></div>
@@ -30,10 +31,13 @@
 			<div class="pxs_loading">Loading images...</div>
 			<div class="pxs_slider_wrapper">
 				<ul class="pxs_slider">
-					<li><img src="images/1.png" alt="First Image" /></li>
-					<li><img src="images/2.png" alt="Second Image" /></li>
+					<li><div class="item">"På morgonen är jag alltid orolig att det ska hända något. Nya saker att förklara, nya saker att försvara. Det viktigaste tror jag är att hela tiden ha öppenhet och prata, prata, prata."</div></li>
+					<li><div class="item">"På dagen är jag alltid orolig att det ska hända något. Nya saker att förklara, nya saker att försvara. Det viktigaste tror jag är att hela tiden ha öppenhet och prata, prata, prata."</div></li>
+					<li><div class="item">"På kvällen är jag alltid orolig att det ska hända något. Nya saker att förklara, nya saker att försvara. Det viktigaste tror jag är att hela tiden ha öppenhet och prata, prata, prata."</div></li>
+					<li><div class="item">"På natten är jag alltid orolig att det ska hända något. Nya saker att förklara, nya saker att försvara. Det viktigaste tror jag är att hela tiden ha öppenhet och prata, prata, prata."</div></li>
+					<!--li><img src="images/2.png" alt="Second Image" /></li>
 					<li><img src="images/3.png" alt="Third Image" /></li>
-					<li><img src="images/4.png" alt="Forth Image" /></li>
+					<li><img src="images/4.png" alt="Forth Image" /></li-->
 				</ul>
 				<div class="pxs_navigation">
 					<span class="pxs_next"></span>
@@ -90,18 +94,18 @@
 							
 						//first preload all the images
 						var loaded		= 0,
-						$images		= $pxs_slider_wrapper.find('img');
+						$images		= $pxs_slider_wrapper.find('.item');
 							
 						$images.each(function(){
 							var $img	= $(this);
-							$('<img/>').load(function(){
-								++loaded;
-								if(loaded	== total_elems*2){
+							//$('<img/>').load(function(){
+							//	++loaded;
+								//if(loaded	== total_elems*2){
 									$pxs_loading.hide();
 									$pxs_slider_wrapper.show();
 										
 									//one images width (assuming all images have the same sizes)
-									var one_image_w		= $pxs_slider.find('img:first').width();
+									var one_image_w		= 300;//$pxs_slider.find('img:first').width();
 							
 									/*
 									need to set width of the slider,
@@ -154,6 +158,9 @@
 									//slide when clicking the navigation buttons
 									$pxs_next.bind('click',function(){
 										++current;
+
+										setBackground($pxs_bg1, current);
+
 										if(current >= total_elems)
 											if(o.circular)
 												current = 0;
@@ -173,6 +180,9 @@
 									});
 									$pxs_prev.bind('click',function(){
 										--current;
+
+										setBackground($pxs_bg1, current);
+
 										if(current < 0)
 											if(o.circular)
 												current = total_elems - 1;
@@ -201,6 +211,9 @@
 										if(o.auto)
 											clearInterval(slideshow);
 										current 	= $thumb.index();
+
+										setBackground($pxs_bg1, current);
+
 										slide(current,
 										$pxs_slider,
 										$pxs_bg3,
@@ -244,16 +257,46 @@
 										o.easingBg);
 									});
 
-								}
-							}).error(function(){
-								alert('here')
-							}).attr('src',$img.attr('src'));
+								//}
+							//}).error(function(){
+							//	alert('here')
+							//}).attr('src',$img.attr('src'));
 						});
 							
 							
 							
 					});
 				};
+
+				var moveSun = function(current) {
+					//change bg image
+					if(current === 1) {
+						$(".sun").attr("class","sun day");
+					} else if(current === 2) {
+						$(".sun").attr("class","sun evening");
+					} else if(current === 3) {
+						$(".sun").attr("class","sun night");
+					} else {
+						$(".sun").attr("class","sun");
+					}	
+				}
+
+				var setBackground = function($pxs_bg1, current) {
+					moveSun(current);
+
+					var $elems = $('.pxs_slider .item');
+					//change bg image
+					if(current === 1) {
+						$pxs_bg1.attr("class","pxs_bg1 day");
+						$elems[current].attr("class","item day");
+					} else if(current === 2) {
+						$pxs_bg1.attr("class","pxs_bg1 evening");
+					} else if(current === 3) {
+						$pxs_bg1.attr("class","pxs_bg1 night");
+					} else {
+						$pxs_bg1.attr("class","pxs_bg1");
+					}	
+				}
 				
 				//the current windows width
 				var w_w				= $(window).width();
